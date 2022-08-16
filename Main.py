@@ -7,9 +7,6 @@ URL = "https://www.amazon.co.uk/New-Apple-iPhone-12-128GB/dp/B08L5QVFCT"
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"}
 
-login = input("Enter your email")
-passw = input("Enter your password/2FA code")
-
 def check_price():
     page = requests.get(URL, headers=headers)
 
@@ -19,13 +16,11 @@ def check_price():
     price = soup.find("span", class_="a-offscreen").get_text()
     converted_price = float(price[1:])
 
-    if (converted_price < 500):
+    if (converted_price < 700):
         send_mail()
 
-    print(title.strip())
-    print(converted_price)
-
 def send_mail():
+
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.ehlo()
     server.starttls()
@@ -46,6 +41,9 @@ def send_mail():
 
     server.quit()
 
-while True:
-    check_price()
-    time.sleep(60*60*24)
+if __name__ == "__main__":
+    login = input("Enter your email")
+    passw = input("Enter your password")
+    while True:
+        check_price()
+        time.sleep(60*60*24)
